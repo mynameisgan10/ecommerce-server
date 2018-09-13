@@ -41,4 +41,4 @@ CREATE TABLE Comments(
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)
-)
+);

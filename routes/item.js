@@ -6,8 +6,6 @@ router.post('/new', item.newItem);
 
 router.post('/delete', item.deleteItem);
 
-router.get('/category/:name', item.getItemByCategory);
-
 router.get('/categories', item.getItemCategories);
 
 module.exports = router

@@ -1,16 +1,15 @@
 const express = require("express");
 const app = express();
 const user = require('./routes/user');
-const mysql = require('mysql');
+const comment = require('./routes/comment');
+const social = require('./routes/social');
 
-app.use(((req, res, next) => {
-    res.locals.connection = mysql.createConnection(
-        {host: 'localhost', user: 'root', password: 'liverpool123', database: 'SHOPLET'}
-    );
-    res.locals.connection.connect();
-    next();
-}))
+
+
 app.use('/api/v1/users', user);
+app.use('/api/v1/comment', comment);
+app.use('/api/v1/social', social);
+
 
 app.listen(3000, () => {
     console.log("server on port 3000");

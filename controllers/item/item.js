@@ -6,6 +6,9 @@ const item = {
     },
     deleteItem: (req, res) => {
         res.json({status: "success", message: "deleted item  "})
+    },
+    saveItem: (req, res) => {
+        res.json({status: "success", message: "saved the item"})
     }
 }
 

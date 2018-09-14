@@ -9,6 +9,16 @@ const item = {
     },
     saveItem: (req, res) => {
         res.json({status: "success", message: "saved the item"})
+    },
+    getItemCategories: (req, res) => {
+        res.json({
+            status: "success", message: "all item categories"
+        })
+    },
+    getItemByCategory: (req,res) => {
+        res.json({
+            status: "success", message: "search all item by category"
+        })
     }
 }
 

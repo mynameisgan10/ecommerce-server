@@ -4,8 +4,8 @@ const item = require('../controllers/item/item');
 
 router.post('/new', item.newItem);
 
-router.post('/delete', item.deleteItem);
+router.delete('/delete/:productid', item.deleteItem);
 
-router.get('/categories', item.getItemCategories);
+router.get('/categories/:category', item.getItemCategories);
 
 module.exports = router

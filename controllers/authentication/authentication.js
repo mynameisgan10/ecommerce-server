@@ -3,7 +3,15 @@ const bcrypt = require('bcrypt');
 
 const authentication = {
     authenticate: (req, res) => {
-        res.json({status: "success"})
+        db.query('SELECT * FROM USERS WHERE username = ? LIMIT 1',[req.body.username],(err,results) => {
+            if (err) throw error;
+            bcrypt.compare(req.body.password,results[0].password)
+                .then(passwordStatus => {
+                    res.json({status: "success",results: results,login: passwordStatus})
+                })
+            
+        })
+        
     },
     signup: (req, res) => {
         const user = {

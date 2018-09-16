@@ -6,7 +6,7 @@ USE SHOPLET;
 
 CREATE TABLE Users(
     `id` INT NOT NULL AUTO_INCREMENT,
-    `username` varchar(255) NOT NULL,
+    `username` varchar(255) NOT NULL UNIQUE,
     `password` varchar(255) NOT NULL,
     `desc` TEXT NULL,
     PRIMARY KEY (id) 

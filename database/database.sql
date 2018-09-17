@@ -12,7 +12,7 @@ CREATE TABLE Users(
     PRIMARY KEY (id) 
 );
 
-
+INSERT INTO Categories(name,`desc`) VALUES ("test","some test categories");
 CREATE TABLE Categories(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE Items(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `desc` TEXT NULL,
-    `price` DECIMAL(10,2) NOT NULL
+    `price` DECIMAL(10,2) NOT NULL,
     `category_id` INT NOT NULL,
     `seller_id` INT NOT NULL,
     PRIMARY KEY (id),
@@ -34,10 +34,11 @@ CREATE TABLE Items(
 );
 
 
-CREATE TABLE Comments(
+CREATE TABLE Questions(
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
-    `comment` TEXT NOT NULL,
+    `question` TEXT NOT NULL,
+    `answer` TEXT NULL,
     `item_id` INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
@@ -58,7 +59,7 @@ CREATE TABLE Follows(
     PRIMARY KEY (user_id,following_id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (following_id) REFERENCES Users(id)
-)
+);
 
 CREATE TABLE Saves(
     `user_id` INT NOT NULL,
@@ -66,5 +67,5 @@ CREATE TABLE Saves(
     PRIMARY KEY(user_id,item_id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)
-)
+);
 

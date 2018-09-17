@@ -4,11 +4,12 @@ const item = {
     newItem: (req, res) => {
         const newItem = {
             name: "iphone",
+            price: 200,
             category_id: 1,
             seller_id: 1
         }
-        db.query("INSERT INTO Items SET ?", newItem, (err, results) => {
-            if (err) 
+        db.query("INSERT INTO Items SET ?", newItem, (error, results) => {
+            if (error) 
                 throw error;
             res.json({status: "success", message: "created new item"})
         })
@@ -17,8 +18,8 @@ const item = {
         db.query(
             "DELETE FROM Items WHERE id = ?",
             [req.params.productid],
-            (err, results) => {
-                if (err) 
+            (error, results) => {
+                if (error) 
                     throw error;
                 res.json({status: "success", message: "deleted item  "})
             }
@@ -30,8 +31,8 @@ const item = {
             user_id: req.body.userid,
             item_id: req.body.itemid
         }
-        db.query("INSERT INTO Saves SET ?", save, (err, results) => {
-            if (err) 
+        db.query("INSERT INTO Saves SET ?", save, (error, results) => {
+            if (error) 
                 throw error;
             res.json({status: "success", message: "saved the item", results: results})
         })
@@ -41,8 +42,8 @@ const item = {
         db.query(
             "SELECT * FROM Items WHERE category_id = ? ",
             [req.params.category],
-            (err, results) => {
-                if (err) 
+            (error, results) => {
+                if (error) 
                     throw error;
                 res.json({status: "success", message: "all item categories", results: results})
             }

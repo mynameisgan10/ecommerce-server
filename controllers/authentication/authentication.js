@@ -15,7 +15,7 @@ const authentication = {
     },
     signup: (req, res) => {
         const user = {
-            username: "testname",
+            username: "testname1",
             password: "123123123"
         }
         bcrypt

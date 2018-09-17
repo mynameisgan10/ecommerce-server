@@ -4,10 +4,10 @@ const social = require('../controllers/social/social');
 
 router.post('/follow/:userid', social.follow);
 
-router.post('/unfollow/:userid',social.unfollow);
+router.delete('/unfollow/:userid',social.unfollow);
 
 router.post('/like/:itemid',social.like);
 
-router.post('/unlike/:itemid',social.unlike);
+router.delete('/unlike/:itemid',social.unlike);
 
 module.exports = router;

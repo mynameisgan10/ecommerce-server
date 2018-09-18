@@ -9,6 +9,7 @@ CREATE TABLE Users(
     `username` varchar(255) NOT NULL UNIQUE,
     `password` varchar(255) NOT NULL,
     `desc` TEXT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id) 
 );
 
@@ -28,6 +29,7 @@ CREATE TABLE Items(
     `price` DECIMAL(10,2) NOT NULL,
     `category_id` INT NOT NULL,
     `seller_id` INT NOT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (seller_id) REFERENCES Users(id),
     FOREIGN KEY (category_id) REFERENCES Categories(id)
@@ -40,6 +42,7 @@ CREATE TABLE Questions(
     `question` TEXT NOT NULL,
     `answer` TEXT NULL,
     `item_id` INT NOT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)
@@ -48,6 +51,7 @@ CREATE TABLE Questions(
 CREATE TABLE Likes(
     `user_id` INT NOT NULL,
     `item_id` INT NOT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY(user_id,item_id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)
@@ -56,6 +60,7 @@ CREATE TABLE Likes(
 CREATE TABLE Follows(
     `user_id` INT NOT NULL,
     `following_id` INT NOT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (user_id,following_id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (following_id) REFERENCES Users(id)
@@ -64,6 +69,7 @@ CREATE TABLE Follows(
 CREATE TABLE Saves(
     `user_id` INT NOT NULL,
     `item_id` INT NOT NULL,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY(user_id,item_id),
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)

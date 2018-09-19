@@ -2,19 +2,20 @@ const db = require('../../models/dbconnection');
 
 const social = {
     like: (req, res) => {
-        const like_item = {
-            user_id: 1,
-            item_id: 4
-        }
+        console.log(req.headers.authorization + "test");
+        // const like_item = {
+        //     user_id: 1,
+        //     item_id: 4
+        // }
         // const like_item = {
         //     user_id: "something",
         //     item_id: req.params.itemid
         // }
-        db.query("INSERT INTO Likes SET ?", like_item, (error, results) => {
-            if (error) 
-                throw error;
-            res.json({status: "success", message: "liked an item", results: results})
-        })
+        // db.query("INSERT INTO Likes SET ?", like_item, (error, results) => {
+        //     if (error) 
+        //         throw error;
+        //     res.json({status: "success", message: "liked an item", results: results})
+        // })
     },
     unlike: (req, res) => {
         const dislike_item = {

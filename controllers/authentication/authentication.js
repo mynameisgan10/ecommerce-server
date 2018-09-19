@@ -5,7 +5,6 @@ const csrftoken = require('csrf');
 
 const authentication = {
     authenticate: (req, res) => {
-        console.log(req.cookies);
         db.query(
             'SELECT * FROM USERS WHERE username = ? LIMIT 1',
             [req.body.username],
@@ -51,6 +50,10 @@ const authentication = {
 
     },
     signup: (req, res) => {
+        // const user = {
+        //     username: req.body.username,
+        //     password: req.body.password
+        // }
         const user = {
             username: "testname1",
             password: "123123123"

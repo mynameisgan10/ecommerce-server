@@ -29,15 +29,13 @@ const authentication = {
                             username: results[0].username,
                             login: passwordStatus
                         }, process.env.JWT_REFRESH_SECRET + results[0].password, {expiresIn: '7d'})
-                        res.cookie("xsrf", xsrf, {secure: true,expires: new Date(Date.now() + 900000)});
+                        res.cookie("xsrf", xsrf, {expires: new Date(Date.now() + 900000)});
                         res.cookie("token", token, {
                             httpOnly: true,
-                            secure: true,
                             expires: new Date(Date.now() + 900000)
                         });
                         res.cookie("refreshtoken", refreshToken, {
-                            httpOnly: true,
-                            secure: true
+                            httpOnly: true
                         });
                         res.json({token: token, refreshToken: refreshToken});
                     })

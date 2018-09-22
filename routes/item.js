@@ -8,6 +8,9 @@ router.delete('/delete/:productid', item.deleteItem);
 
 router.get('/categories/:category', item.getItemCategories);
 
+router.get('/:id', item.getItemById);
+
 router.post('/save', item.saveItem);
+
 
 module.exports = router

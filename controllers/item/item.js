@@ -45,10 +45,25 @@ const item = {
             (error, results) => {
                 if (error) 
                     throw error;
-                res.json({status: "success", message: "all item categories", results: results})
+                res.json({success: true , message: "all item categories", items: results})
             }
         )
 
+    },
+    getItemById: (req,res) => {
+        db.query("SELECT * FROM Items WHERE id = ?",[req.params.id],(error,results) => {
+            if (error){
+                return res.json({
+                    success: false,
+                    message: "failed to get single item"
+                })
+            }
+            res.json({
+                success: true,
+                message: "get single item",
+                item: results
+            })
+        })
     }
 }
 

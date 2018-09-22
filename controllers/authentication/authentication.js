@@ -4,9 +4,8 @@ const jwt = require('jsonwebtoken');
 const csrftoken = require('csrf');
 
 const authentication = {
-    
+
     authenticate: (req, res) => {
-        console.log(req.headers.authorization);
         db.query(
             'SELECT * FROM USERS WHERE username = ? LIMIT 1',
             [req.body.username],
@@ -29,7 +28,7 @@ const authentication = {
                                 login: passwordStatus,
                                 xsrf: xsrf,
                                 secret: secret
-                            }, process.env.JWT_SECRET + results[0].password, { //uses our secret + the user's hash as the secret
+                            }, process.env.JWT_SECRET, { //uses our secret + the user's hash as the secret
                                 expiresIn: '1h'
                             });
                             const refreshToken = jwt.sign({
@@ -44,7 +43,7 @@ const authentication = {
                                 expires: new Date(Date.now() + 900000)
                             });
                             res.cookie("refreshtoken", refreshToken, {httpOnly: true});
-                            res.json({success: true, token: token, refreshToken: refreshToken});
+                            res.json({success: true, token: token, refreshToken: refreshToken,user: results[0].username});
                         } else {
                             res.json({success: false, message: "wrong password"})
                         }
@@ -95,7 +94,7 @@ const authentication = {
                                     login: true,
                                     xsrf: xsrf,
                                     secret: secret
-                                }, process.env.JWT_SECRET + user.password, { //uses our secret + the user's hash as the secret
+                                }, process.env.JWT_SECRET, { //uses our secret + the user's hash as the secret
                                     expiresIn: '1h'
                                 });
                                 const refreshToken = jwt.sign({
@@ -123,6 +122,31 @@ const authentication = {
     },
     getProfile: (req, res) => {
         console.log(req.headers.authorization);
+    },
+    reauthenticate: (req, res) => {
+        if (!req.headers['x-xsrf-token'] || req.headers['x-xsrf-token'].trim() === '') {
+            return res.json(
+                {success: false, message: "automatic authentication failed. CSRF not found"}
+            )
+        }
+        const userjwt = jwt.verify(
+            req.headers.authorization,
+            process.env.JWT_SECRET,
+            (err, decoded) => {
+                if (err) {
+                    return res.json({success: false, message: "credentials verification failed"})
+                };
+                if (decoded.xsrf === req.headers['x-xsrf-token']) {
+                    res.json({success: true, message: "auto reauthenticated",user: "test"})
+                }
+            }
+        )
+        // const userjwt = jwt.decode(req.headers.authorization); console.log(userjwt);
+        // db.query("SELECT * FROM USERS WHERE username =
+        // ?",[userjwt.username],(err,results) => {     if(err) throw err;
+        // if(results.length === 0){         return res.json({             success:
+        // false,             message: "user does not exist"         })     }else{
+        // bcrypt.compare()     } })
     }
 }
 

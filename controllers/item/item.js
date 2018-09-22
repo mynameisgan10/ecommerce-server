@@ -38,7 +38,20 @@ const item = {
         })
 
     },
-    getItemCategories: (req, res) => {
+    getItemCategories: (req,res) => {
+        db.query(
+            "SELECT * FROM Categories",
+            (error, results) => {
+                if(error) throw error;
+                res.json({
+                    success: true,
+                    message: "got all the categories",
+                    results: results
+                })
+            }
+        )
+    },
+    getItemByCategories: (req, res) => {
         db.query(
             "SELECT * FROM Items WHERE category_id = ? ",
             [req.params.category],

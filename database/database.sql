@@ -14,6 +14,10 @@ CREATE TABLE Users(
 );
 
 INSERT INTO Categories(name,`desc`) VALUES ("test","some test categories");
+INSERT INTO Categories(name,`desc`) VALUES ("Electronics","some test categories");
+INSERT INTO Categories(name,`desc`) VALUES ("Toys","some test categories");
+INSERT INTO Categories(name,`desc`) VALUES ("Cars","some test categories");
+
 CREATE TABLE Categories(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,

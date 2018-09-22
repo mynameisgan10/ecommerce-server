@@ -6,7 +6,9 @@ router.post('/new', item.newItem);
 
 router.delete('/delete/:productid', item.deleteItem);
 
-router.get('/categories/:category', item.getItemCategories);
+router.get('/categories',item.getItemCategories);
+
+router.get('/categories/:category', item.getItemByCategories);
 
 router.get('/:id', item.getItemById);
 

@@ -3,8 +3,8 @@ const db = require('../../models/dbconnection');
 const item = {
     newItem: (req, res) => {
         const newItem = {
-            name: "iphone",
-            price: 200,
+            name: req.body.title,
+            price: req.body.price,
             category_id: 1,
             seller_id: 1
         }

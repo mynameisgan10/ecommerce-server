@@ -15,6 +15,8 @@ router.get('/categories/:category', item.getItemByCategories);
 
 router.get('/:id',item.getItemById);
 
+router.get('/user/:id',item.getItemsByUserId)
+
 router.post('/save', item.saveItem);
 
 

@@ -63,6 +63,16 @@ const item = {
         )
 
     },
+    getItemsByUserId: (req,res) => {
+        db.query(
+            "SELECT * FROM Items WHERE seller_id = ? LIMIT 10",
+            [1],
+            (error, results) => {
+                if(error) throw error;
+                res.json({success: true,message: "items listed by current user",items: results})
+            }
+        )
+    },
     getItemById: (req,res) => {
         console.log(req.user);
         db.query("SELECT * FROM Items WHERE id = ?",[req.params.id],(error,results) => {

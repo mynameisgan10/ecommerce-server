@@ -132,7 +132,6 @@ const authentication = {
         }
         const extractedHeader = req.headers.authorization.split(' ');
         const token = extractedHeader[1];
-        console.log(extractedHeader);;
         const userjwt = jwt.verify(
             token,
             process.env.JWT_SECRET,

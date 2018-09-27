@@ -10,4 +10,6 @@ router.post('/signup', authentication.signup);
 router.get('/profile', authentication.getProfile);
 
 router.post('/me', cookiesToAuth, authentication.reauthenticate);
+
+router.post('/logout',authentication.logout);
 module.exports = router;

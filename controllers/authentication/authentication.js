@@ -120,6 +120,15 @@ const authentication = {
         )
 
     },
+    logout: (req,res) => {
+        res.clearCookie("refreshtoken");
+        res.clearCookie("xsrf");
+        res.clearCookie("token");
+        res.json({
+            success: true,
+            message: "logged out from the system"
+        })
+    },
     getProfile: (req, res) => {
         console.log(req.headers.authorization);
     },

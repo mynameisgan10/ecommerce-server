@@ -7,9 +7,9 @@ const question = require('./routes/question');
 const social = require('./routes/social');
 const item = require('./routes/item');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const cookiesToAuth = require('./middlewares/cookiesToAuth/cookiesToAuth');
+const passport = require('passport');
 
 
 app.use(cookieParser());
@@ -22,6 +22,8 @@ const corsOptions = {
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }
+app.use(passport.initialize());
+require('./middlewares/passport/passport')(passport);
 app.use(cors(corsOptions));
 app.options('*',cors(corsOptions));
 

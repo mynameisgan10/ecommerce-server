@@ -64,8 +64,7 @@ const item = {
 
     },
     getItemById: (req,res) => {
-        console.log(req.headers.Authorization);
-        console.log(req.user);
+        console.log(req.headers);
         db.query("SELECT * FROM Items WHERE id = ?",[req.params.id],(error,results) => {
             if (error){
                 return res.json({

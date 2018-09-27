@@ -124,6 +124,7 @@ const authentication = {
         console.log(req.headers.authorization);
     },
     reauthenticate: (req, res) => {
+        console.log(req.headers);
         if (!req.headers['x-xsrf-token'] || req.headers['x-xsrf-token'].trim() === '') {
             return res.json(
                 {success: false, message: "automatic authentication failed. CSRF not found"}

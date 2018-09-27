@@ -12,7 +12,7 @@ router.get('/categories',item.getItemCategories);
 
 router.get('/categories/:category', item.getItemByCategories);
 
-router.get('/:id', cookiesToAuth, item.getItemById);
+router.get('/:id',passport.authenticate('jwt'),item.getItemById);
 
 router.post('/save', item.saveItem);
 

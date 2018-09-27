@@ -3,6 +3,7 @@ const router = express.Router();
 const item = require('../controllers/item/item');
 const cookiesToAuth = require('../middlewares/cookiesToAuth/cookiesToAuth');
 const passport = require('passport');
+// ,passport.authenticate('jwt',{session: false})
 
 router.post('/new', item.newItem);
 
@@ -12,7 +13,7 @@ router.get('/categories',item.getItemCategories);
 
 router.get('/categories/:category', item.getItemByCategories);
 
-router.get('/:id',passport.authenticate('jwt',{session: false}),item.getItemById);
+router.get('/:id',item.getItemById);
 
 router.post('/save', item.saveItem);
 

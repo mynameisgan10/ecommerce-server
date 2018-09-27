@@ -9,16 +9,10 @@ const item = require('./routes/item');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const passport = require('passport');
 const cookiesToAuth = require('./middlewares/cookiesToAuth/cookiesToAuth');
 
 
 app.use(cookieParser());
-app.use(passport.initialize());
-require('./middlewares/passport/passport')(passport);
-
-
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookiesToAuth); // check incoming requests for csrf token in the header and compare it with jwt cookie

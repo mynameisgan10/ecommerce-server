@@ -130,8 +130,11 @@ const authentication = {
                 {success: false, message: "automatic authentication failed. CSRF not found"}
             )
         }
+        const extractedHeader = req.headers.authorization.split(' ');
+        const token = extractedHeader[1];
+        console.log(extractedHeader);;
         const userjwt = jwt.verify(
-            req.headers.authorization,
+            token,
             process.env.JWT_SECRET,
             (err, decoded) => {
                 if (err) {

@@ -43,7 +43,9 @@ const authentication = {
                                 expires: new Date(Date.now() + 900000)
                             });
                             res.cookie("refreshtoken", refreshToken, {httpOnly: true});
-                            res.json({success: true, token: token, refreshToken: refreshToken,user: results[0].username});
+                            res.json(
+                                {success: true, token: token, refreshToken: refreshToken, user: results[0].username}
+                            );
                         } else {
                             res.json({success: false, message: "wrong password"})
                         }
@@ -120,44 +122,27 @@ const authentication = {
         )
 
     },
-    logout: (req,res) => {
+    logout: (req, res) => {
         res.clearCookie("refreshtoken");
         res.clearCookie("xsrf");
         res.clearCookie("token");
-        res.json({
-            success: true,
-            message: "logged out from the system"
-        })
+        res.json({success: true, message: "logged out from the system"})
     },
     getProfile: (req, res) => {
         console.log(req.headers.authorization);
     },
     reauthenticate: (req, res) => {
+        console.log(req.user);
         if (!req.headers['x-xsrf-token'] || req.headers['x-xsrf-token'].trim() === '') {
             return res.json(
                 {success: false, message: "automatic authentication failed. CSRF not found"}
             )
         }
-        const extractedHeader = req.headers.authorization.split(' ');
-        const token = extractedHeader[1];
-        const userjwt = jwt.verify(
-            token,
-            process.env.JWT_SECRET,
-            (err, decoded) => {
-                if (err) {
-                    return res.json({success: false, message: "credentials verification failed"})
-                };
-                if (decoded.xsrf === req.headers['x-xsrf-token']) {
-                    res.json({success: true, message: "auto reauthenticated",user: "test"})
-                }
-            }
-        )
-        // const userjwt = jwt.decode(req.headers.authorization); console.log(userjwt);
-        // db.query("SELECT * FROM USERS WHERE username =
-        // ?",[userjwt.username],(err,results) => {     if(err) throw err;
-        // if(results.length === 0){         return res.json({             success:
-        // false,             message: "user does not exist"         })     }else{
-        // bcrypt.compare()     } })
+        if (req.user.xsrf === req.headers['x-xsrf-token']) { //checking if the xsrf token in jwt and the one sent in the headers are the same
+            console.log("xsrf verified");
+            res.json({success: true, message: "auto reauthenticated", user: "test"})
+        }
+
     }
 }
 

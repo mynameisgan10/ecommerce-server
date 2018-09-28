@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const item = require('../controllers/item/item');
 const passport = require('passport');
-// ,passport.authenticate('jwt',{session: false})
+const cookiesToAuth = require('../middlewares/cookiesToAuth/cookiesToAuth');
 
-router.post('/new', item.newItem);
+
+router.post('/new',passport.authenticate('jwt',{session: false}), item.newItem);
 
 router.delete('/delete/:productid', item.deleteItem);
 

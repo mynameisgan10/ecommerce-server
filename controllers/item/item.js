@@ -11,7 +11,8 @@ const item = {
         db.query("INSERT INTO Items SET ?", newItem, (error, results) => {
             if (error) 
                 throw error;
-            res.json({status: "success", message: "created new item"})
+                console.log(results);
+            res.json({success: true, message: "created new item", item_id: results.insertId})
         })
     },
     deleteItem: (req, res) => {
@@ -21,7 +22,7 @@ const item = {
             (error, results) => {
                 if (error) 
                     throw error;
-                res.json({status: "success", message: "deleted item  "})
+                res.json({success: true, message: "deleted item  "})
             }
         )
 
@@ -34,7 +35,7 @@ const item = {
         db.query("INSERT INTO Saves SET ?", save, (error, results) => {
             if (error) 
                 throw error;
-            res.json({status: "success", message: "saved the item", results: results})
+            res.json({success: true, message: "saved the item", results: results})
         })
 
     },
@@ -74,7 +75,6 @@ const item = {
         )
     },
     getItemById: (req,res) => {
-        console.log(req.user);
         db.query("SELECT * FROM Items WHERE id = ?",[req.params.id],(error,results) => {
             if (error){
                 return res.json({

@@ -25,6 +25,7 @@ const authentication = {
                             var xsrf = csrf.create(secret)
                             const token = jwt.sign({
                                 username: results[0].username,
+                                userid: results[0].id,
                                 login: passwordStatus,
                                 xsrf: xsrf,
                                 secret: secret
@@ -44,7 +45,7 @@ const authentication = {
                             });
                             res.cookie("refreshtoken", refreshToken, {httpOnly: true});
                             res.json(
-                                {success: true, token: token, refreshToken: refreshToken, user: results[0].username}
+                                {success: true, token: token, refreshToken: refreshToken, user: results[0].username,userid: results[0].id}
                             );
                         } else {
                             res.json({success: false, message: "wrong password"})

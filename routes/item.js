@@ -7,7 +7,7 @@ const cookiesToAuth = require('../middlewares/cookiesToAuth/cookiesToAuth');
 
 router.post('/new',passport.authenticate('jwt',{session: false}), item.newItem);
 
-router.delete('/delete/:productid', item.deleteItem);
+router.delete('/delete/:productid', passport.authenticate('jwt',{session: false}),item.deleteItem);
 
 router.get('/categories',item.getItemCategories);
 
@@ -15,7 +15,7 @@ router.get('/categories/:category', item.getItemByCategories);
 
 router.get('/:id',item.getItemById);
 
-router.get('/user/:id',item.getItemsByUserId)
+router.get('/user/:id',passport.authenticate('jwt',{session: false}),item.getItemsByUserId)
 
 router.post('/save', item.saveItem);
 

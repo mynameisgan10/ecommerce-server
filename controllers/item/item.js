@@ -6,23 +6,38 @@ const item = {
             name: req.body.title,
             price: req.body.price,
             category_id: 1,
-            seller_id: 1
+            seller_id: req.user.userid
         }
         db.query("INSERT INTO Items SET ?", newItem, (error, results) => {
             if (error) 
                 throw error;
-                console.log(results);
-            res.json({success: true, message: "created new item", item_id: results.insertId})
+            res.json(
+                {success: true, message: "created new item", item_id: results.insertId}
+            )
         })
     },
     deleteItem: (req, res) => {
         db.query(
-            "DELETE FROM Items WHERE id = ?",
+            "SELECT * FROM Items WHERE id = ?",
             [req.params.productid],
             (error, results) => {
                 if (error) 
                     throw error;
-                res.json({success: true, message: "deleted item  "})
+                if (results[0].seller_id === req.user.userid) { //checking if the user id and the item being deleted is the same
+                    db.query(
+                        "DELETE FROM Items WHERE id = ?",
+                        [req.params.productid],
+                        (error, results) => {
+                            if (error) 
+                                throw error;
+                            res
+                                .status(201)
+                                .json({success: true, message: "deleted item "})
+                        }
+                    )
+                } else {
+                    return res.json({success: false, message: "not the owner"})
+                }
             }
         )
 
@@ -39,18 +54,12 @@ const item = {
         })
 
     },
-    getItemCategories: (req,res) => {
-        db.query(
-            "SELECT * FROM Categories",
-            (error, results) => {
-                if(error) throw error;
-                res.json({
-                    success: true,
-                    message: "got all the categories",
-                    results: results
-                })
-            }
-        )
+    getItemCategories: (req, res) => {
+        db.query("SELECT * FROM Categories", (error, results) => {
+            if (error) 
+                throw error;
+            res.json({success: true, message: "got all the categories", results: results})
+        })
     },
     getItemByCategories: (req, res) => {
         db.query(
@@ -59,35 +68,41 @@ const item = {
             (error, results) => {
                 if (error) 
                     throw error;
-                res.json({success: true , message: "all item categories", items: results})
+                res.json({success: true, message: "all item categories", items: results})
             }
         )
 
     },
-    getItemsByUserId: (req,res) => {
+    getItemsByUserId: (req, res) => {
+        let id;
+        if (req.params.id === "me") {
+            id = req.user.userid
+        }else{
+            id = req.params.id;
+        }
         db.query(
-            "SELECT * FROM Items WHERE seller_id = ? LIMIT 10",
-            [1],
+            "SELECT * FROM Items WHERE seller_id = ? LIMIT 12",
+            [id],
             (error, results) => {
-                if(error) throw error;
-                res.json({success: true,message: "items listed by current user",items: results})
+                if (error) 
+                    throw error;
+                res.json(
+                    {success: true, message: "items listed by current user", items: results}
+                )
             }
         )
     },
-    getItemById: (req,res) => {
-        db.query("SELECT * FROM Items WHERE id = ?",[req.params.id],(error,results) => {
-            if (error){
-                return res.json({
-                    success: false,
-                    message: "failed to get single item"
-                })
+    getItemById: (req, res) => {
+        db.query(
+            "SELECT * FROM Items WHERE id = ?",
+            [req.params.id],
+            (error, results) => {
+                if (error) {
+                    return res.json({success: false, message: "failed to get single item"})
+                }
+                res.json({success: true, message: "get single item", item: results})
             }
-            res.json({
-                success: true,
-                message: "get single item",
-                item: results
-            })
-        })
+        )
     }
 }
 

@@ -2,6 +2,8 @@ const db = require('../../models/dbconnection');
 
 const item = {
     newItem: (req, res) => {
+        console.log(req.files);
+        console.log(req.body);
         const newItem = {
             name: req.body.title,
             price: req.body.price,
@@ -54,6 +56,17 @@ const item = {
         })
 
     },
+    likeItem: (req, res) => {
+        const item = {
+            user_id: req.body.userid,
+            item_id: req.body.itmeid
+        }
+        db.query("INSERT INTO Likes Set ?", item, (error, results) => {
+            if (error) 
+                throw error;
+            res.json({success: true, message: "liked the item", results: results})
+        })
+    },
     getItemCategories: (req, res) => {
         db.query("SELECT * FROM Categories", (error, results) => {
             if (error) 
@@ -77,7 +90,7 @@ const item = {
         let id;
         if (req.params.id === "me") {
             id = req.user.userid
-        }else{
+        } else {
             id = req.params.id;
         }
         db.query(

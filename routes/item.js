@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const item = require('../controllers/item/item');
 const passport = require('passport');
-const cookiesToAuth = require('../middlewares/cookiesToAuth/cookiesToAuth');
-const multer  = require('multer')
-const upload = multer()
+const upload = require('../middlewares/multer-aws/multer-aws');
 
 
 router.post('/new',passport.authenticate('jwt',{session: false}),upload.array('images', 4), item.newItem);

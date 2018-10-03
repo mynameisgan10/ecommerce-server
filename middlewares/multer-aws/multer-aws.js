@@ -1,6 +1,7 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const mime = require('mime');
 
 aws
     .config
@@ -23,7 +24,7 @@ const upload = multer({
             cb(null, file.mimetype)
         },
         key: function (req, file, cb) {
-            cb(null, Date.now().toString()+'.png')
+            cb(null, Date.now().toString() + file.originalname)
         }
     })
 })

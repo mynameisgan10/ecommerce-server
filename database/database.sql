@@ -28,6 +28,10 @@ CREATE TABLE Categories(
 
 CREATE TABLE Items(
     `id` INT NOT NULL AUTO_INCREMENT,
+    `first_image` TEXT NULL,
+    `second_image` TEXT NULL,
+    `third_image` TEXT NULL,
+    `fourth_image` TEXT NULL,
     `name` VARCHAR(255) NOT NULL,
     `desc` TEXT NULL,
     `price` DECIMAL(10,2) NOT NULL,

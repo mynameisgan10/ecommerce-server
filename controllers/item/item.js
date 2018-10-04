@@ -4,10 +4,18 @@ const item = {
     newItem: (req, res) => {
         console.log(req.files);
         console.log(req.body);
+        const mysqlParams = ["first_image","second_image","third_image","fourth_image"];
+        const images = {};
+        req.files.forEach((image,index) => {
+            images[mysqlParams[index]] = image.location;
+        });
+        console.log(req.user);
+        console.log(images);
         const newItem = {
             name: req.body.title,
             price: req.body.price,
             category_id: 1,
+            ...images,
             seller_id: req.user.userid
         }
         db.query("INSERT INTO Items SET ?", newItem, (error, results) => {

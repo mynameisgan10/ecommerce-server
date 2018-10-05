@@ -34,6 +34,8 @@ CREATE TABLE Items(
     `fourth_image` TEXT NULL,
     `name` VARCHAR(255) NOT NULL,
     `desc` TEXT NULL,
+    `liked` BOOLEAN NOT NULL DEFAULT 0,
+    `bookmarked` BOOLEAN NOT NULL DEFAULT 0,
     `price` DECIMAL(10,2) NOT NULL,
     `category_id` INT NOT NULL,
     `seller_id` INT NOT NULL,

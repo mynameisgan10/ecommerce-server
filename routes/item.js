@@ -17,9 +17,9 @@ router.get('/:id',item.getItemById);
 
 router.get('/user/:id',passport.authenticate('jwt',{session: false}),item.getItemsByUserId)
 
-router.post('/save/:itemid', item.saveItem);
+router.post('/save/:itemid', passport.authenticate('jwt',{session: false}),item.saveItem);
 
-router.post('/like/:itemid', item.likeItem)
+router.post('/like/:itemid',passport.authenticate('jwt',{session: false}), item.likeItem)
 
 
 module.exports = router

@@ -17,7 +17,6 @@ const upload = multer({
         bucket: 'imagetest1999',
         acl: 'public-read',
         metadata: function (req, file, cb) {
-            console.log(file);
             cb(null, {fieldName: file.fieldname});
         },
         contentType: function (req, file, cb) {

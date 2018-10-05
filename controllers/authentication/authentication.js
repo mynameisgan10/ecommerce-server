@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const csrftoken = require('csrf');
 
+//TODO: signing up returns different jwt when compared to authentication;
 const authentication = {
 
     authenticate: (req, res) => {
